@@ -1,7 +1,7 @@
 # 🍽️ Canteen Menu & Ratings System
 
 A **full-stack web application** to display daily canteen dishes and collect **5-star ratings and feedback** from users.  
-Built using **Spring Boot (backend)** and **Vue.js (frontend)** with **PostgreSQL** database integration.
+Built using **Spring Boot (backend)** and **Vue.js (frontend)** with **MongoDB** database integration.
 
 ---
 
@@ -26,7 +26,7 @@ To digitize the college canteen’s daily menu and enable users to rate dishes, 
 |-------|-------------|
 | **Frontend** | Vue.js 3, Vite, Axios, TailwindCSS |
 | **Backend** | Spring Boot, Spring Data JPA, Maven |
-| **Database** | PostgreSQL |
+| **Database** | MongoDB |
 | **Testing** | JUnit (Spring Boot), Vitest (Vue) |
 | **Version Control** | Git & GitHub |
 | **Build Tools** | npm, Maven |
@@ -90,7 +90,7 @@ canteen-menu-ratings/
 - Retrieve average rating for each dish
 
 #### End-to-End Functionality
-- Fully integrated Vue + Spring Boot + PostgreSQL  
+- Fully integrated Vue + Spring Boot + MongoDB  
 - Verified via API and UI testing
 
 ---
@@ -115,7 +115,7 @@ canteen-menu-ratings/
 - `404 Not Found` — record missing  
 
 #### Database Schema
-PostgreSQL with one-to-many relationship:  
+MongoDB with one-to-many relationship:  
 One `MenuItem` ↔ Many `Ratings`
 
 ---
