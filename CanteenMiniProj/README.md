@@ -78,7 +78,7 @@ canteen-menu-ratings/
 
 ## 🧩 Evaluation Criteria Implementation
 
-### ✅ **1. Functionality & Correctness (25 pts)**
+### ✅ **1. Functionality & Correctness**
 
 #### Classes Implemented
 - **MenuItem** – represents a dish (id, name, category, price, rating, date)
@@ -95,7 +95,7 @@ canteen-menu-ratings/
 
 ---
 
-### ✅ **2. API & Data Model (20 pts)**
+### ✅ **2. API & Data Model**
 
 #### RESTful Routes
 
@@ -120,7 +120,7 @@ One `MenuItem` ↔ Many `Ratings`
 
 ---
 
-### ✅ **3. UI/UX Basics (10 pts)**
+### ✅ **3. UI/UX Basics**
 
 - **Routing:** Implemented with Vue Router (`/menu`, `/rate`, `/admin`)  
 - **Browser Storage:** Used `localStorage` to persist user session  
@@ -128,7 +128,7 @@ One `MenuItem` ↔ Many `Ratings`
 
 ---
 
-### ✅ **4. Validation & Error Handling (10 pts)**
+### ✅ **4. Validation & Error Handling**
 
 #### Backend
 - Input validation using `@Valid`, `@NotBlank`, `@Min`, etc.  
@@ -142,7 +142,7 @@ One `MenuItem` ↔ Many `Ratings`
 
 ---
 
-### ✅ **5. Code Quality & Setup (10 pts)**
+### ✅ **5. Code Quality & Setup**
 
 - Clean directory structure and layered architecture  
 - Clear and descriptive naming conventions  
@@ -164,7 +164,7 @@ npm run dev
 
 ---
 
-### ✅ **6. Testing (10 pts)**
+### ✅ **6. Testing**
 
 #### 🧪 Spring Boot Testing (JUnit)
 File: `MenuServiceTest.java`  
@@ -191,25 +191,6 @@ test('renders menu items correctly', async () => {
 ```
 
 ✅ **Both backend and frontend testing implemented successfully.**
-
----
-
-### ✅ **7. GitHub Practices & Presentation (15 pts)**
-
-- Proper commit messages (e.g., `feat: add rating component`, `fix: menu validation`)
-- `.gitignore` configured for node_modules and build files
-- Screenshots and documentation in `/docs`
-- Well-structured and professional README (this file)
-
----
-
-## 🏆 Bonus Features (+15 pts)
-
-| Feature | Points | Description |
-|----------|---------|-------------|
-| 🎨 Accessibility | +5 | TailwindCSS-based responsive and accessible UI |
-| 🔐 Security | +5 | JWT authentication, restricted CORS, input sanitization |
-| 🗄️ Database Migration | +5 | Flyway migrations for schema version control |
 
 ---
 
@@ -246,26 +227,19 @@ npm run dev
 - 🧾 Export ratings and menu as PDF reports  
 
 ---
-
-## 📸 Screenshots
-
-> Add screenshots inside a `/docs/screenshots/` folder and link them here:
-
-| Feature | Screenshot |
-|----------|-------------|
-| 🏠 Home / Menu Page | ![Menu Page](docs/screenshots/menu-page.png) |
-| ⭐ Rating Submission | ![Rating Form](docs/screenshots/rating-form.png) |
-| 🧑‍💼 Admin Panel | ![Admin Dashboard](docs/screenshots/admin-panel.png) |
-
----
-
 ## 👩‍💻 Author
+
+**Gopika Ganesan**  
+🎓 M.Tech (Integrated) — Computer Science  
+🏫 SSN College of Engineering, Chennai
 
 **Harini L. V.**  
 🎓 M.Tech (Integrated) — Computer Science  
 🏫 SSN College of Engineering, Chennai  
-📧 [Your Email Here]  
-🌐 [GitHub Profile](https://github.com/HariniLV)
+
+**Jayasree R**  
+🎓 M.Tech (Integrated) — Computer Science  
+🏫 SSN College of Engineering, Chennai
 
 ---
 
