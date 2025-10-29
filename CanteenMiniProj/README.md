@@ -76,7 +76,7 @@ canteen-menu-ratings/
 
 ---
 
-## 🧩 Evaluation Criteria Implementation
+## 🧩 Implementation
 
 ### ✅ **1. Functionality & Correctness**
 
