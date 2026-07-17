@@ -1,253 +1,198 @@
-# 🍽️ Canteen Menu & Ratings System
+# 🍽️ Canteen Menu & Ratings System (Spring Boot + Vue)
 
-A **full-stack web application** to display daily canteen dishes and collect **5-star ratings and feedback** from users.  
-Built using **Spring Boot (backend)** and **Vue.js (frontend)** with **MongoDB** database integration.
+A full-stack web application that lets users view the daily canteen menu and submit **star ratings + feedback** for menu items. Administrators can manage the daily menu.
 
----
-
-## 🧭 Project Overview
-
-### 🎯 Objective  
-To digitize the college canteen’s daily menu and enable users to rate dishes, providing valuable feedback to improve food quality and menu management.
-
-### ✨ Key Features  
-- 📅 View daily dishes with category, price, and average rating  
-- ⭐ Submit ratings and feedback for dishes  
-- 🧑‍💼 Admin panel for managing daily menu items (Add, Edit, Delete)  
-- 📊 Real-time average rating calculation per dish  
-- ✅ Full validation (backend + frontend)  
-- 💾 Browser storage for persistent session data  
+- **Frontend:** Vue 3 (Vite) 
+- **Backend:** Spring Boot (REST APIs + validation + Spring Security)
+- **Database:** MongoDB
 
 ---
 
-## 🏗️ Tech Stack
-
-| Layer | Technology |
-|-------|-------------|
-| **Frontend** | Vue.js 3, Vite, Axios, TailwindCSS |
-| **Backend** | Spring Boot, Spring Data JPA, Maven |
-| **Database** | MongoDB |
-| **Testing** | JUnit (Spring Boot), Vitest (Vue) |
-| **Version Control** | Git & GitHub |
-| **Build Tools** | npm, Maven |
+## Aim
+Provide a digital workflow for canteen menu presentation and user feedback by combining:
+- a modern SPA (Vue)
+- a RESTful backend (Spring Boot)
+- persistent storage (MongoDB)
 
 ---
 
-## ⚙️ Architecture
+## Objective
+1. Display daily menu items (by date).
+2. Allow users to submit ratings/feedback for menu items.
+3. Allow admins to add/update/delete menu items.
+4. Support viewing orders and user-related order history.
 
-### 🧱 System Design
-A **client-server model** using RESTful APIs to connect Vue.js frontend and Spring Boot backend.
+---
+
+## Architecture
+### High-level architecture
+Client-server architecture using REST APIs.
 
 ```text
 Vue.js (Frontend)
-   ↓ Axios (HTTP Requests)
+  ↓ Axios calls to /api/*
 Spring Boot (Backend)
-   ↓ JPA Repositories
-PostgreSQL Database
+  ↓ Spring MVC controllers + Services + Repositories
+MongoDB
 ```
+
+### Backend security model (demo-friendly)
+- CSRF disabled (API use case).
+- Basic HTTP auth disabled.
+- `permitAll` is enabled for:
+  - `POST /api/public/register`
+  - `POST /api/public/authenticate`
+  - Menu endpoints under `/api/menu/**`
+  - Orders endpoints under `/api/orders/**`
+
+> Authentication is currently a **demo “fake token”** returned from `/api/public/authenticate`.
 
 ---
 
-## 🗂️ Directory Structure
+## Workflow
+### 1) Start application
+1. Run MongoDB.
+2. Run Spring Boot backend (`localhost:8080`).
+3. Run Vue frontend (`localhost:5173`).
 
-```
-canteen-menu-ratings/
+### 2) Menu browsing
+- Frontend requests menu data from:
+  - `GET /api/menu`
+  - `GET /api/menu/date/{date}`
+
+### 3) Rating submission
+- Frontend submits a rating for a menu item using:
+  - `POST /api/menu/{id}/rate`
+
+### 4) Admin menu management
+- Admin/UI calls:
+  - `POST /api/menu`
+  - `PUT /api/menu/{id}`
+  - `DELETE /api/menu/{id}`
+
+### 5) Orders
+- Order-related requests:
+  - `POST /api/orders`
+  - `GET /api/orders` 
+  - `GET /api/orders/user/{userId}`
+  - `GET /api/orders/status/{status}`
+  - `GET /api/orders/{id}`
+  - `PUT /api/orders/{id}`
+
+### 6) Authentication (demo)
+- Register:
+  - `POST /api/public/register`
+- Login:
+  - `POST /api/public/authenticate`
+
+---
+
+## Tech Stack
+| Layer | Technology |
+|---|---|
+| Frontend | Vue 3, Vite, Axios, Vue Router, Vuex, Vitest |
+| Backend | Spring Boot, Spring Web, Spring Security, Spring Validation |
+| Database | MongoDB |
+| Build/Test | Maven (backend), npm/Vite/Vitest (frontend) |
+
+---
+
+## Implementation (what each layer does)
+### Backend (Spring Boot)
+- **Controllers** expose REST endpoints.
+- **Services** implement application logic.
+- **Repositories** persist and query MongoDB collections.
+- **SecurityConfig** defines route access.
+
+### Frontend (Vue)
+- Vue Router provides navigation between views.
+- Axios makes API calls; Vite proxies `/api` to the backend.
+- Vuex holds shared state (where applicable).
+
+---
+
+## Project Structure
+```text
+CanteenMenu-main/
 ├── backend/
-│   ├── src/main/java/com/canteen/
-│   │   ├── controller/
-│   │   ├── service/
-│   │   ├── model/
-│   │   ├── repository/
-│   │   └── CanteenApplication.java
-│   ├── src/test/java/com/canteen/
-│   └── pom.xml
+│   ├── pom.xml
+│   └── src/main/java/com/example/canteen/
+│       ├── controller/
+│       ├── service/
+│       ├── repository/
+│       ├── model/
+│       └── config/
 └── frontend/
-    ├── src/
-    │   ├── components/
-    │   ├── pages/
-    │   ├── router/
-    │   ├── store/
-    │   ├── assets/
-    │   └── App.vue
     ├── package.json
-    ├── vite.config.js
-    └── tests/
+    └── src/
+        ├── views/
+        ├── components/
+        ├── assets/
+        └── App.vue
 ```
 
 ---
 
-## 🧩 Implementation
-
-### ✅ **1. Functionality & Correctness**
-
-#### Classes Implemented
-- **MenuItem** – represents a dish (id, name, category, price, rating, date)
-- **Rating** – represents user feedback (id, user, menuId, stars, comment)
-
-#### CRUD Operations
-- Add, Update, Delete menu items (Admin)
-- Create and Read ratings (User)
-- Retrieve average rating for each dish
-
-#### End-to-End Functionality
-- Fully integrated Vue + Spring Boot + MongoDB  
-- Verified via API and UI testing
+## Backend Operations (backend/)
+See: `backend/HELP.md`
 
 ---
 
-### ✅ **2. API & Data Model**
-
-#### RESTful Routes
-
-| Method | Endpoint | Description |
-|---------|-----------|-------------|
-| GET | `/api/menu` | Fetch all menu items |
-| POST | `/api/menu` | Add a new dish (Admin) |
-| PUT | `/api/menu/{id}` | Update dish details |
-| DELETE | `/api/menu/{id}` | Remove a dish |
-| GET | `/api/ratings/{menuId}` | Get all ratings for a dish |
-| POST | `/api/ratings` | Submit a rating |
-
-#### Status Codes
-- `200 OK` — success  
-- `201 Created` — new record added  
-- `400 Bad Request` — validation failure  
-- `404 Not Found` — record missing  
-
-#### Database Schema
-MongoDB with one-to-many relationship:  
-One `MenuItem` ↔ Many `Ratings`
+## Frontend Operations (frontend/)
+See: `frontend/Readme.md`
 
 ---
 
-### ✅ **3. UI/UX Basics**
-
-- **Routing:** Implemented with Vue Router (`/menu`, `/rate`, `/admin`)  
-- **Browser Storage:** Used `localStorage` to persist user session  
-- **Responsive Design:** Built using **TailwindCSS** for accessibility and responsiveness  
-
----
-
-### ✅ **4. Validation & Error Handling**
-
-#### Backend
-- Input validation using `@Valid`, `@NotBlank`, `@Min`, etc.  
-- Exception handling with `@ControllerAdvice`  
-- Returns descriptive JSON error messages  
-
-#### Frontend
-- Inline form validations and error prompts  
-- Disabled submit button for invalid inputs  
-- Clear toast/pop-up messages for errors and success  
-
----
-
-### ✅ **5. Code Quality & Setup**
-
-- Clean directory structure and layered architecture  
-- Clear and descriptive naming conventions  
-- Comments for all controllers and service methods  
-- Environment variables stored in `.env`  
-- Easy local setup with minimal steps  
-
+## Commands to Run
+### Backend (Spring Boot)
 ```bash
-# Backend
 cd backend
 mvn clean install
 mvn spring-boot:run
-
-# Frontend
-cd frontend
-npm install
-npm run dev
 ```
+- Backend URL: `http://localhost:8080`
 
----
-
-### ✅ **6. Testing**
-
-#### 🧪 Spring Boot Testing (JUnit)
-File: `MenuServiceTest.java`  
-Tests CRUD operations and service logic.
-
-```java
-@Test
-void testAddMenuItem() {
-    MenuItem item = new MenuItem("Idly", "Breakfast", 30.0);
-    when(menuRepository.save(item)).thenReturn(item);
-    assertEquals("Idly", menuService.addMenuItem(item).getName());
-}
-```
-
-#### 🧩 Vue Testing (Vitest)
-File: `MenuList.test.js`  
-Tests UI rendering and data fetching behavior.
-
-```js
-test('renders menu items correctly', async () => {
-  render(MenuList, { props: { dishes: [{ name: 'Idly' }] } });
-  expect(screen.getByText('Idly')).toBeTruthy();
-});
-```
-
-✅ **Both backend and frontend testing implemented successfully.**
-
----
-
-## 🚀 Run the Project
-
-### 1️⃣ Clone the Repository
-```bash
-git clone https://github.com/<your-username>/canteen-menu-ratings.git
-cd canteen-menu-ratings
-```
-
-### 2️⃣ Setup Backend
-```bash
-cd backend
-mvn spring-boot:run
-```
-
-### 3️⃣ Setup Frontend
+### Frontend (Vue/Vite)
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-
-🖥️ Backend: `http://localhost:8080`  
-🌐 Frontend: `http://localhost:5173`
+- Frontend URL: `http://localhost:5173`
 
 ---
 
-## 🧠 Future Enhancements
-- 📈 Analytics dashboard for popular dishes  
-- 🔒 Role-based authentication (Admin/User)  
-- 🖼️ Image upload for dishes  
-- 🧾 Export ratings and menu as PDF reports  
+## Git Compile (typical workflow)
+```bash
+git clone <your-repo-url>
+git checkout -b blackboxai/docs
 
----
-## 👩‍💻 Author
-
-**Gopika Ganesan**  
-🎓 M.Tech (Integrated) — Computer Science  
-🏫 SSN College of Engineering, Chennai
-
-**Harini L. V.**  
-🎓 M.Tech (Integrated) — Computer Science  
-🏫 SSN College of Engineering, Chennai  
-
-**Jayasree R**  
-🎓 M.Tech (Integrated) — Computer Science  
-🏫 SSN College of Engineering, Chennai
+# build
+cd backend && mvn clean install
+cd ../frontend && npm install && npm run build
+```
 
 ---
 
-## 🏁 Conclusion
+## MongoDB Configuration
+Backend configuration is in:
+- `backend/src/main/resources/application.properties`
 
-This project demonstrates a complete **end-to-end full-stack development workflow** using **Spring Boot, Vue.js, and PostgreSQL**.  
-It meets all functionality, validation, and testing requirements, showcasing both technical and design proficiency.
+Current values:
+- `spring.data.mongodb.uri=mongodb://localhost:27017`
+- `spring.data.mongodb.database=db`
 
 ---
 
-⭐ *If you found this project useful, don’t forget to star the repo!* ⭐
+## Troubleshooting
+- **MongoDB not running:** start MongoDB and ensure port `27017` is available.
+- **API calls failing from frontend:** confirm backend is running on `8080`.
+- **Authentication issues:** `/api/public/authenticate` returns `fake-jwt-token` and does not implement real JWT yet.
+
+---
+
+## Future Enhancements
+- Replace demo auth with real JWT + role-based authorization.
+- Add rating aggregation endpoints (server-side averages).
+- Add file/image upload for menu items.
+- Add CI checks and improve test coverage.
